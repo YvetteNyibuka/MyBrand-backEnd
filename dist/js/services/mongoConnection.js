@@ -22,7 +22,7 @@ mongoose_1.default.connection.on('close', () => {
 });
 const mongoConnect = () => {
     try {
-        mongoose_1.default.connect('mongodb+srv://izanyibukayvette:j3kpwvKDtkNQGwRp@cluster0.b83eeem.mongodb.net/');
+        mongoose_1.default.connect('mongodb+srv://izanyibukayvette:j3kpwvKDtkNQGwRp@cluster0.b83eeem.mongodb.net/mybrand-be');
         console.info('MongoDB connected');
     }
     catch (error) {

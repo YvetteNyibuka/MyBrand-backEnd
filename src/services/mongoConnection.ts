@@ -10,7 +10,7 @@ mongoose.connection.on('close', () => {
 
 export const mongoConnect = () => {
   try {
-     mongoose.connect('mongodb+srv://izanyibukayvette:j3kpwvKDtkNQGwRp@cluster0.b83eeem.mongodb.net/');
+     mongoose.connect('mongodb+srv://izanyibukayvette:j3kpwvKDtkNQGwRp@cluster0.b83eeem.mongodb.net/mybrand-be');
     console.info('MongoDB connected');
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);

@@ -5,6 +5,5 @@ const apiRouter: Router = express.Router();
 
 apiRouter.use('/blog', blogRoutes);
 
-
 export default apiRouter;
 
