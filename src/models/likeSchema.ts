@@ -1,6 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 
 const likeSchema = new Schema({
+  blogId: {
+    type: String,
+    required: true
+  },
   userId: {
     type: String,
     required: true
