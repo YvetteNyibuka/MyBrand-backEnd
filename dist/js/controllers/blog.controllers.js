@@ -14,19 +14,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletesingleBlog = exports.httpUpdateOneBlog = exports.httpGetOneBlog = exports.httpGetBlogs = exports.httpCreateBlog = void 0;
 const blogSchema_1 = __importDefault(require("../models/blogSchema"));
+const cloudinary_1 = require("cloudinary");
+const streamifier_1 = __importDefault(require("streamifier"));
 // create a blog
 const httpCreateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const blog = new blogSchema_1.default({
-            title: req.body.title,
-            description: req.body.description,
-        });
-        yield blog.save();
-        res.status(201).json({ message: 'Blog created', data: blog });
+        const { title, description } = req.body;
+        const imageFile = req.file;
+        if (!imageFile) {
+            res.status(400).json({
+                status: "failed",
+                message: "Please provide an image file",
+            });
+            return;
+        }
+        const result = cloudinary_1.v2.uploader.upload_stream({ folder: "myPortfolio" }, (error, cloudinaryResult) => __awaiter(void 0, void 0, void 0, function* () {
+            if (error) {
+                console.error(error);
+                res.status(500).json({
+                    status: false,
+                    message: "An error occurred while uploading the image to Cloudinary",
+                });
+            }
+            else {
+                const blog = new blogSchema_1.default({
+                    title: title,
+                    description: description,
+                    coverImage: cloudinaryResult.secure_url,
+                });
+                yield blog.save();
+                res.status(201).json({ message: "Blog created", data: blog });
+            }
+        }));
+        if (!result) {
+            throw new Error("Cloudinary upload failed");
+        }
+        streamifier_1.default.createReadStream(imageFile.buffer).pipe(result);
     }
     catch (error) {
-        console.error('Error creating blog:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error("Error creating blog:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 exports.httpCreateBlog = httpCreateBlog;
@@ -53,8 +80,8 @@ const httpGetOneBlog = (req, res) => __awaiter(void 0, void 0, void 0, function*
         res.status(200).json({ message: "Blog found", data: singleBlog });
     }
     catch (error) {
-        console.error('Error fetching blog:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error("Error fetching blog:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 exports.httpGetOneBlog = httpGetOneBlog;
@@ -76,8 +103,8 @@ const httpUpdateOneBlog = (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(200).json({ message: "Blog updated successfully", data: blog });
     }
     catch (error) {
-        console.error('Error updating blog:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error("Error updating blog:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 exports.httpUpdateOneBlog = httpUpdateOneBlog;
@@ -88,8 +115,8 @@ const deletesingleBlog = (req, res) => __awaiter(void 0, void 0, void 0, functio
         res.status(204).send();
     }
     catch (error) {
-        console.error('Error deleting blog:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error("Error deleting blog:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 });
 exports.deletesingleBlog = deletesingleBlog;

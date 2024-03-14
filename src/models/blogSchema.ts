@@ -15,6 +15,10 @@ const BlogSchema: Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    coverImage: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

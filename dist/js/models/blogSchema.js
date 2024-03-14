@@ -13,5 +13,9 @@ const BlogSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    coverImage: {
+        type: String,
+        required: true,
+    },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('Blog', BlogSchema);
