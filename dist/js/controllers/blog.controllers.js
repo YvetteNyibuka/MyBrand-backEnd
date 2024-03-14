@@ -44,10 +44,12 @@ const httpGetBlogs = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.httpGetBlogs = httpGetBlogs;
-// get one blog
 const httpGetOneBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const singleBlog = yield blogSchema_1.default.findOne({ _id: req.params.id });
+        if (!singleBlog) {
+            return res.status(404).json({ message: "Blog not found", data: {} });
+        }
         res.status(200).json({ message: "Blog found", data: singleBlog });
     }
     catch (error) {
@@ -59,7 +61,8 @@ exports.httpGetOneBlog = httpGetOneBlog;
 // update single blogs
 const httpUpdateOneBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const blog = yield blogSchema_1.default.findOne({ _id: req.params.id });
+        const blogId = req.params.id.trim();
+        const blog = yield blogSchema_1.default.findOne({ _id: blogId });
         if (!blog) {
             return res.status(404).json({ message: "Blog not found", data: null });
         }

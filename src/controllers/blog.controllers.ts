@@ -31,10 +31,14 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
   }
 };
 
-// get one blog
 export const httpGetOneBlog = async (req: Request, res: Response) => {
   try {
     const singleBlog = await Blog.findOne({ _id: req.params.id });
+    
+    if (!singleBlog) {
+      return res.status(404).json({ message: "Blog not found", data: {} });
+    }
+
     res.status(200).json({ message: "Blog found", data: singleBlog });
   } catch (error) {
     console.error('Error fetching blog:', error);
@@ -42,10 +46,14 @@ export const httpGetOneBlog = async (req: Request, res: Response) => {
   }
 };
 
+
 // update single blogs
 export const httpUpdateOneBlog = async (req: Request, res: Response) => {
   try {
-    const blog = await Blog.findOne({ _id: req.params.id });
+
+    const blogId = req.params.id.trim();
+
+    const blog = await Blog.findOne({ _id: blogId });
 
     if (!blog) {
       return res.status(404).json({ message: "Blog not found", data: null });
@@ -65,6 +73,7 @@ export const httpUpdateOneBlog = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 // delete blog
 export const deletesingleBlog = async (req: Request, res: Response) => {
