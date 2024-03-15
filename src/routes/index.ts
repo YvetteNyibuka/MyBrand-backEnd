@@ -4,6 +4,7 @@ import commentRouter from './comments.routes';
 import likeRouter from './like.routes';
 import querryRouter from './querry.routes';
 import userRouter from '../routes/auth/signup.routes'
+import loginRouter from '../routes/auth/login.routes'
 
 const apiRouter: Router = express.Router();
 
@@ -12,6 +13,6 @@ apiRouter.use('/blog', commentRouter)
 apiRouter.use('/blog', likeRouter);
 apiRouter.use('/querries', querryRouter);
 apiRouter.use('/auth/register', userRouter);
-
+apiRouter.use('/auth/login', loginRouter);
 export default apiRouter;
 

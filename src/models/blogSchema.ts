@@ -1,8 +1,13 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import { any } from 'joi';
+import mongoose, { Schema } from 'mongoose';
+import { Types } from 'mongoose';
 
 export interface Blog extends Document {
+  toObject():any
   title: string;
   description: string;
+  comments: any;
+  likes: any;
 }
 
 const BlogSchema: Schema = new mongoose.Schema(
@@ -19,6 +24,8 @@ const BlogSchema: Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    comments:Types.ObjectId,
+    likes: Types.ObjectId
   },
   { timestamps: true }
 );

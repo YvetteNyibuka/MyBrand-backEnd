@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletesingleBlog = exports.httpUpdateOneBlog = exports.httpGetOneBlog = exports.httpGetBlogs = exports.httpCreateBlog = void 0;
+exports.deletesingleBlog = exports.httpUpdateOneBlog = exports.httpGetOneBlog = exports.httpGetBlogs = exports.httpGetBlogsm = exports.httpCreateBlog = void 0;
 const blogSchema_1 = __importDefault(require("../models/blogSchema"));
 const cloudinary_1 = require("cloudinary");
 const streamifier_1 = __importDefault(require("streamifier"));
+const commentSchema_1 = __importDefault(require("../models/commentSchema"));
+const likeSchema_1 = __importDefault(require("../models/likeSchema"));
 // create a blog
 const httpCreateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -57,17 +59,30 @@ const httpCreateBlog = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.httpCreateBlog = httpCreateBlog;
-// get all blogs
+const httpGetBlogsm = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const blogsWithComments = yield blogSchema_1.default.find({}).populate('comments');
+        res.status(200).json({ message: "All blogs with comments", data: blogsWithComments });
+    }
+    catch (error) {
+        console.error("Error fetching blogs with comments:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+});
+exports.httpGetBlogsm = httpGetBlogsm;
 const httpGetBlogs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const blogs = yield blogSchema_1.default.find({});
-        res.status(200).json({ message: "All blogs", data: blogs });
+        const blogsWithComments = yield Promise.all(blogs.map((blog) => __awaiter(void 0, void 0, void 0, function* () {
+            const comments = yield commentSchema_1.default.find({ blogId: blog._id });
+            const likes = yield likeSchema_1.default.find({ blogId: blog._id });
+            return Object.assign(Object.assign({}, blog.toObject()), { comments: comments, likes: likes === null || likes === void 0 ? void 0 : likes.length });
+        })));
+        res.status(200).json({ message: "Blogs with comments", data: blogsWithComments });
     }
     catch (error) {
-        console.error("Error fetching blogs:", error);
-        res
-            .status(500)
-            .json({ message: "Internal server error", error: error.message });
+        console.error("Error fetching blogs with comments:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
     }
 });
 exports.httpGetBlogs = httpGetBlogs;

@@ -1,16 +1,19 @@
 import { Request, Response } from "express";
 import User from "../../models/auth/userSchema";
+import bcrypt from 'bcrypt'
 
 // create a user
 export const httpCreateUser = async (req: Request, res: Response) => {
   try {
-    const { names, email, password } = req.body;
-   
+    const { names, email} = req.body;
+    const { password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10); 
+
 
           const user = new User({
             names: names,
             email: email,
-            password: password,
+            password: hashedPassword,
           });
           await user.save();
           res.status(201).json({ message: "user registered successfully ", data: user });

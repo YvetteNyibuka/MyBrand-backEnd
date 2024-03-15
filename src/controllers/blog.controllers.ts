@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import Blog from "../models/blogSchema";
 import { v2 as cloudinaryV2, UploadStream } from "cloudinary";
 import streamifier from "streamifier";
+import Comment from "../models/commentSchema";
+import Like from "../models/likeSchema";
 
 // create a blog
 export const httpCreateBlog = async (req: Request, res: Response) => {
@@ -47,16 +49,32 @@ export const httpCreateBlog = async (req: Request, res: Response) => {
   }
 };
 
-// get all blogs
+export const httpGetBlogsm = async (req: Request, res: Response) => {
+  try {
+    const blogsWithComments = await Blog.find({}).populate('comments');
+    res.status(200).json({ message: "All blogs with comments", data: blogsWithComments });
+  } catch (error: any) {
+    console.error("Error fetching blogs with comments:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
 export const httpGetBlogs = async (req: Request, res: Response) => {
   try {
-    const blogs: any = await Blog.find({});
-    res.status(200).json({ message: "All blogs", data: blogs });
+    const blogs = await Blog.find({});
+    const blogsWithComments = await Promise.all(blogs.map(async (blog) => {
+      const comments = await Comment.find({ blogId: blog._id });
+      const likes = await Like.find({ blogId: blog._id });
+      return {
+        ...blog.toObject(),
+        comments: comments,
+        likes: likes?.length
+      };
+    }));
+
+    res.status(200).json({ message: "Blogs with comments", data: blogsWithComments });
   } catch (error: any) {
-    console.error("Error fetching blogs:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    console.error("Error fetching blogs with comments:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
 

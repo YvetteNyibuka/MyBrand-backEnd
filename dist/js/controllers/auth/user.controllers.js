@@ -14,14 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletesingleUser = exports.httpUpdateOneUser = exports.httpGetOneUser = exports.httpGetUsers = exports.httpCreateUser = void 0;
 const userSchema_1 = __importDefault(require("../../models/auth/userSchema"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 // create a user
 const httpCreateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { names, email, password } = req.body;
+        const { names, email } = req.body;
+        const { password } = req.body;
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         const user = new userSchema_1.default({
             names: names,
             email: email,
-            password: password,
+            password: hashedPassword,
         });
         yield user.save();
         res.status(201).json({ message: "user registered successfully ", data: user });
