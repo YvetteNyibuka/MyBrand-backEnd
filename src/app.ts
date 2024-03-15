@@ -1,10 +1,18 @@
 import express, { Express, Request, Response } from 'express';
 import apiRouter from './routes/index';
 import { v2 as cloudinary } from "cloudinary";
+import cors from "cors";
+
 require('dotenv').config();
 
 
 const app: Express = express();
+app.use(cors());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
