@@ -15,43 +15,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.httpLogin = void 0;
 const userSchema_1 = __importDefault(require("../../models/auth/userSchema"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-require('dotenv').config();
+const dotenv_1 = __importDefault(require("dotenv"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
+dotenv_1.default.config();
 const httpLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.body;
         const { email, password } = user;
-        const isUserExist = yield userSchema_1.default.findOne({
-            email: email,
-        });
+        const isUserExist = yield userSchema_1.default.findOne({ email: email });
         if (!isUserExist) {
-            res.status(404).json({
+            return res.status(404).json({
                 status: 404,
                 success: false,
                 message: "User not found",
             });
-            return;
         }
-        const isPasswordMatched = (isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.password) === password;
+        const isPasswordMatched = yield bcrypt_1.default.compare(password, isUserExist.password);
         if (!isPasswordMatched) {
-            res.status(400).json({
+            return res.status(400).json({
                 status: 400,
                 success: false,
-                message: "wrong password",
+                message: "Wrong password",
             });
-            return;
         }
-        const token = jsonwebtoken_1.default.sign({ _id: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist._id, email: isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.email }, process.env.MY_SECRET_KEY ? process.env.MY_SECRET_KEY : "FYSHAFRW", {
+        const token = jsonwebtoken_1.default.sign({ _id: isUserExist._id, email: isUserExist.email }, process.env.MY_SECRET_KEY || "FYSHAFRW", {
             expiresIn: "1d",
         });
-        res.status(200).json({
+        return res.status(200).json({
             status: 200,
             success: true,
-            message: "login success",
+            message: "Login success",
             token: token,
         });
     }
     catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             status: 400,
             message: error.message.toString(),
         });

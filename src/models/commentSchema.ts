@@ -9,7 +9,7 @@ const commentSchema = new Schema({
   commentMessage: {
     type: String,
     required: true,
-  },
+  }
 });
 
 const Comment = mongoose.model('Comments', commentSchema);
