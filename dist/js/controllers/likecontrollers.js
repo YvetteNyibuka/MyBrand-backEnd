@@ -14,18 +14,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getLikesByBlogId = exports.likeBlog = void 0;
 const likeSchema_1 = __importDefault(require("../models/likeSchema"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const likeBlog = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const blogId = req.params.blogId;
-        const { userId } = req.body;
+        const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
         const { isLiked } = req.body;
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided' });
+        }
+        const decodedToken = jsonwebtoken_1.default.verify(token, process.env.MY_SECRET_KEY || "FYSHAFRW");
+        const userId = decodedToken._id;
         // Check if the user has already liked the blog
         const existingLike = yield likeSchema_1.default.findOne({ blogId, userId, isLiked });
         if (existingLike) {
             return res.status(400).json({ message: 'Blog already liked by this user' });
         }
         // Create a new like
-        const like = new likeSchema_1.default({ userId, isLiked });
+        const like = new likeSchema_1.default({ userId, isLiked, blogId });
         yield like.save();
         res.status(200).json({ message: 'Blog liked successfully', blogId: blogId, data: like });
     }

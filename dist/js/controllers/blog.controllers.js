@@ -74,7 +74,9 @@ const httpGetBlogs = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const blogs = yield blogSchema_1.default.find({});
         const blogsWithComments = yield Promise.all(blogs.map((blog) => __awaiter(void 0, void 0, void 0, function* () {
+            console.log("BlogIIIIIIIIIIIIIIIII", blog._id);
             const comments = yield commentSchema_1.default.find({ blogId: blog._id });
+            console.log("all commmmentsssssssssssssssssssss", comments);
             const likes = yield likeSchema_1.default.find({ blogId: blog._id });
             return Object.assign(Object.assign({}, blog.toObject()), { comments: comments, likes: likes === null || likes === void 0 ? void 0 : likes.length });
         })));

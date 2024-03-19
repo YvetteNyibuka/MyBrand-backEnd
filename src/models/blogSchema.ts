@@ -1,17 +1,16 @@
-import { any } from 'joi';
 import mongoose, { Schema } from 'mongoose';
 import { Types } from 'mongoose';
 
 export interface Blog extends Document {
-  toObject():any
-  title: string;
-  description: string;
-  comments: any;
-  likes: any;
+ title: string;
+ description: string;
+ coverImage: string;
+ comments: Types.ObjectId[];
+ likes: Types.ObjectId[]; 
 }
 
 const BlogSchema: Schema = new mongoose.Schema(
-  {
+ {
     title: {
       type: String,
       required: true,
@@ -24,10 +23,8 @@ const BlogSchema: Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    comments:Types.ObjectId,
-    likes: Types.ObjectId
-  },
-  { timestamps: true }
+ },
+ { timestamps: true }
 );
 
 export default mongoose.model<Blog>('Blog', BlogSchema);

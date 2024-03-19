@@ -62,7 +62,11 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
   try {
     const blogs = await Blog.find({});
     const blogsWithComments = await Promise.all(blogs.map(async (blog) => {
-      const comments = await Comment.find({ blogId: blog._id });
+      console.log("BlogIIIIIIIIIIIIIIIII", blog._id);
+      
+      const comments = await Comment.find({blogId: blog._id});
+      console.log("all commmmentsssssssssssssssssssss", comments);
+      
       const likes = await Like.find({ blogId: blog._id });
       return {
         ...blog.toObject(),

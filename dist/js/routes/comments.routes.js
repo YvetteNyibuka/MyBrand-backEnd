@@ -8,4 +8,5 @@ const comment_controllers_1 = require("../controllers/comment.controllers");
 const commentRouter = express_1.default.Router();
 commentRouter.post('/:blogId/comments', comment_controllers_1.createComment);
 commentRouter.get('/:blogId/comments', comment_controllers_1.getCommentsByBlogId);
+commentRouter.get('/comments', comment_controllers_1.getComments);
 exports.default = commentRouter;

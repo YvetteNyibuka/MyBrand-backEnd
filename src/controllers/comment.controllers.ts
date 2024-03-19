@@ -1,14 +1,33 @@
 import { Request, Response } from 'express';
 import Comment from '../models/commentSchema';
+import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
+import bcrypt from "bcrypt";
 
+export const getComments = async (req: Request, res: Response) =>{
+  console.log("Clcikeddddddddddddddddddddddddddddddddddddddddddddddddd");
+  
+try{
+  const allComments = await Comment.find({})
+  res.status(200).json({ message: 'Comments found', data:allComments }); 
+} catch(e){
+  console.log("Error fetching comments:", e);
+  
+}
+}
 export const createComment = async (req: Request, res: Response) => {
   try {
     const blogId = req.params.blogId;
+
+    const token:any = req.headers.authorization?.split(" ")[1]; 
+    const decodedToken: any = jwt.verify(token,   process.env.MY_SECRET_KEY || "FYSHAFRW" );
+    const username = decodedToken.names;
     const {commentMessage } = req.body;
     const comment = new Comment({
       commentMessage,
+      blogId,
+      username,
     });
-
     await comment.save();
     res.status(201).json({ message: 'Comment created', blogId: blogId, data: comment});
   } catch (error) {
@@ -26,3 +45,5 @@ export const getCommentsByBlogId = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+

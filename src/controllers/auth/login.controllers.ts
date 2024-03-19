@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../../models/auth/userSchema";
-import Jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 
@@ -30,14 +30,19 @@ export const httpLogin = async (req: Request, res: Response) => {
             });
         }
 
-        const token = Jwt.sign(
-            { _id: isUserExist._id, email: isUserExist.email },
-            process.env.MY_SECRET_KEY || "FYSHAFRW",
-            {
-                expiresIn: "1d",
-            }
-        );
+            const token = jwt.sign(
+                { 
+                    _id: isUserExist._id,
+                    names: isUserExist.names,
+                    email: isUserExist.email 
+                },
+                process.env.MY_SECRET_KEY || "FYSHAFRW",
+                {
+                    expiresIn: "1d",
+                }
+            );
 
+            res.setHeader('Authorization', `Bearer ${token}`);
         return res.status(200).json({
             status: 200,
             success: true,

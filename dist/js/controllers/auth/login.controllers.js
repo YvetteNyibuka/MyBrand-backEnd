@@ -38,9 +38,14 @@ const httpLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 message: "Wrong password",
             });
         }
-        const token = jsonwebtoken_1.default.sign({ _id: isUserExist._id, email: isUserExist.email }, process.env.MY_SECRET_KEY || "FYSHAFRW", {
+        const token = jsonwebtoken_1.default.sign({
+            _id: isUserExist._id,
+            names: isUserExist.names,
+            email: isUserExist.email
+        }, process.env.MY_SECRET_KEY || "FYSHAFRW", {
             expiresIn: "1d",
         });
+        res.setHeader('Authorization', `Bearer ${token}`);
         return res.status(200).json({
             status: 200,
             success: true,

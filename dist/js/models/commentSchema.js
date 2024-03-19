@@ -32,7 +32,11 @@ const commentSchema = new mongoose_1.Schema({
     commentMessage: {
         type: String,
         required: true,
-    }
+    },
+    username: {
+        type: String,
+        required: true
+    },
 });
 const Comment = mongoose_1.default.model('Comments', commentSchema);
 exports.default = Comment;
