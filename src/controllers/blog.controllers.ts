@@ -49,15 +49,7 @@ export const httpCreateBlog = async (req: Request, res: Response) => {
   }
 };
 
-export const httpGetBlogsm = async (req: Request, res: Response) => {
-  try {
-    const blogsWithComments = await Blog.find({}).populate('comments');
-    res.status(200).json({ message: "All blogs with comments", data: blogsWithComments });
-  } catch (error: any) {
-    console.error("Error fetching blogs with comments:", error);
-    res.status(500).json({ message: "Internal server error", error: error.message });
-  }
-};
+
 export const httpGetBlogs = async (req: Request, res: Response) => {
   try {
     const blogs = await Blog.find({});
@@ -84,13 +76,13 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
 
 export const httpGetOneBlog = async (req: Request, res: Response) => {
   try {
-    const singleBlog = await Blog.findOne({ _id: req.params.id });
-
+    const singleBlog: any = await Blog.findOne({ _id: req.params.id });
     if (!singleBlog) {
       return res.status(404).json({ message: "Blog not found", data: {} });
     }
-
-    res.status(200).json({ message: "Blog found", data: singleBlog });
+    const singleBlogComments = await Comment.find({blogId: singleBlog._id})
+    const singleBloglikes = await Like.find({blogId: singleBlog._id})
+    res.status(200).json({ message: "Blog found", data: {singleBlog, singleBlogComments, singleBloglikes} });
   } catch (error) {
     console.error("Error fetching blog:", error);
     res.status(500).json({ message: "Internal server error" });
