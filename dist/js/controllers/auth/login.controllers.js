@@ -41,7 +41,8 @@ const httpLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const token = jsonwebtoken_1.default.sign({
             _id: isUserExist._id,
             names: isUserExist.names,
-            email: isUserExist.email
+            email: isUserExist.email,
+            role: isUserExist.role
         }, process.env.MY_SECRET_KEY || "FYSHAFRW", {
             expiresIn: "1d",
         });
@@ -51,6 +52,7 @@ const httpLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             success: true,
             message: "Login success",
             token: token,
+            user: isUserExist
         });
     }
     catch (error) {

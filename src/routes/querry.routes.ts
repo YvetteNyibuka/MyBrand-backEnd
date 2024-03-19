@@ -1,4 +1,6 @@
 import express, { Router } from 'express';
+import {isAdmin} from '../middlewares/authorization'
+
 import {
   httpCreateQuerry,
   httpGetQuerries,
@@ -11,8 +13,8 @@ import isValid from "../middlewares/querryMiddleware";
 const querryRoutes: Router = express.Router();
 
 querryRoutes.post('/', isValid,httpCreateQuerry );
-querryRoutes.get('/', httpGetQuerries);
+querryRoutes.get('/',isAdmin, httpGetQuerries);
 querryRoutes.get('/:id', httpGetOneQuerry);
-querryRoutes.delete('/:id', deletesingleQuerry);
+querryRoutes.delete('/:id',isAdmin, deletesingleQuerry);
 
 export default querryRoutes;

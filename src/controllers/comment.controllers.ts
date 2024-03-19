@@ -1,20 +1,7 @@
 import { Request, Response } from 'express';
 import Comment from '../models/commentSchema';
 import jwt from 'jsonwebtoken';
-import dotenv from "dotenv";
-import bcrypt from "bcrypt";
 
-export const getComments = async (req: Request, res: Response) =>{
-  console.log("Clcikeddddddddddddddddddddddddddddddddddddddddddddddddd");
-  
-try{
-  const allComments = await Comment.find({})
-  res.status(200).json({ message: 'Comments found', data:allComments }); 
-} catch(e){
-  console.log("Error fetching comments:", e);
-  
-}
-}
 export const createComment = async (req: Request, res: Response) => {
   try {
     const blogId = req.params.blogId;

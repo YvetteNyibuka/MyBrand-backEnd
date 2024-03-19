@@ -1,4 +1,6 @@
 import express, { Router } from 'express';
+import {isAdmin,isUser} from '../middlewares/authorization'
+
 import {
   httpCreateBlog,
   httpGetBlogs,
@@ -19,10 +21,10 @@ const upload = multer({ storage });
 
 const blogRoutes: Router = express.Router();
 
-blogRoutes.post('/', upload.single("coverImage"),isValid, httpCreateBlog);
+blogRoutes.post('/', isAdmin, upload.single("coverImage"),isValid, httpCreateBlog);
 blogRoutes.get('/', httpGetBlogs);
-blogRoutes.get('/:id', httpGetOneBlog);
-blogRoutes.patch('/:id', httpUpdateOneBlog);
-blogRoutes.delete('/:id', deletesingleBlog);
+blogRoutes.get('/:id', isUser, httpGetOneBlog);
+blogRoutes.patch('/:id', isAdmin, httpUpdateOneBlog);
+blogRoutes.delete('/:id', isAdmin, deletesingleBlog);
 
 export default blogRoutes;

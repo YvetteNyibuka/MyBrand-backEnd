@@ -12,20 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCommentsByBlogId = exports.createComment = exports.getComments = void 0;
+exports.getCommentsByBlogId = exports.createComment = void 0;
 const commentSchema_1 = __importDefault(require("../models/commentSchema"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Clcikeddddddddddddddddddddddddddddddddddddddddddddddddd");
-    try {
-        const allComments = yield commentSchema_1.default.find({});
-        res.status(200).json({ message: 'Comments found', data: allComments });
-    }
-    catch (e) {
-        console.log("Error fetching comments:", e);
-    }
-});
-exports.getComments = getComments;
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {

@@ -34,7 +34,8 @@ export const httpLogin = async (req: Request, res: Response) => {
                 { 
                     _id: isUserExist._id,
                     names: isUserExist.names,
-                    email: isUserExist.email 
+                    email: isUserExist.email,
+                    role: isUserExist.role 
                 },
                 process.env.MY_SECRET_KEY || "FYSHAFRW",
                 {
@@ -48,6 +49,7 @@ export const httpLogin = async (req: Request, res: Response) => {
             success: true,
             message: "Login success",
             token: token,
+            user: isUserExist
         });
     } catch (error: any) {
         return res.status(400).json({

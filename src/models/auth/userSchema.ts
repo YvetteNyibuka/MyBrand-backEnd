@@ -4,6 +4,7 @@ export interface User extends Document {
   names: string;
   email: string;
   password: string;
+  role: string;
 }
 
 const UserSchema: Schema = new mongoose.Schema(
@@ -20,6 +21,10 @@ const UserSchema: Schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default:'user',
+    }
   },
   { timestamps: true }
 );

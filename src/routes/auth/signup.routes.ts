@@ -1,4 +1,6 @@
 import express, { Router } from 'express';
+import {isAdmin} from '../../middlewares/authorization'
+
 import {
     httpCreateUser,
     httpGetUsers,
@@ -11,9 +13,9 @@ import isValid from "../../middlewares/auth/userMiddleware";
 const userRoutes: Router = express.Router();
 
 userRoutes.post('/',isValid, httpCreateUser);
-userRoutes.get('/', httpGetUsers);
+userRoutes.get('/', isAdmin,httpGetUsers);
 userRoutes.get('/:id', httpGetOneUser);
-userRoutes.patch('/:id', httpUpdateOneUser);
-userRoutes.delete('/:id', deletesingleUser);
+userRoutes.patch('/:id',httpUpdateOneUser);
+userRoutes.delete('/:id', isAdmin, deletesingleUser);
 
 export default userRoutes;
