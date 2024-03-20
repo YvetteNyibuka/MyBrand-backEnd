@@ -37,7 +37,7 @@ export const httpLogin = async (req: Request, res: Response) => {
                     email: isUserExist.email,
                     role: isUserExist.role 
                 },
-                process.env.MY_SECRET_KEY || "FYSHAFRW",
+                process.env.MY_SECRET_KEY!,
                 {
                     expiresIn: "1d",
                 }
