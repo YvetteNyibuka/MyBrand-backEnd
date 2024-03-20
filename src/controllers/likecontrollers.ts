@@ -29,7 +29,7 @@ export const likeBlog = async (req: Request, res: Response) => {
     const like = new Like({ userId, isLiked, blogId });
     await like.save();
 
-    res.status(200).json({ message: 'Blog liked successfully', blogId: blogId, data: like });
+    res.status(201).json({ message: 'Blog liked successfully', blogId: blogId, data: like });
   } catch (error) {
     console.error('Error liking blog:', error);
     res.status(500).json({ message: 'Internal server error' });

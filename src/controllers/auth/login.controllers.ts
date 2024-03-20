@@ -47,14 +47,11 @@ export const httpLogin = async (req: Request, res: Response) => {
         return res.status(200).json({
             status: 200,
             success: true,
-            message: "Login success",
+            message: "Successfully logged in",
             token: token,
             user: isUserExist
         });
     } catch (error: any) {
-        return res.status(400).json({
-            status: 400,
-            message: error.message.toString(),
-        });
+        
     }
 };

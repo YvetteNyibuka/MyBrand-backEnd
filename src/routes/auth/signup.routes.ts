@@ -12,7 +12,7 @@ import isValid from "../../middlewares/auth/userMiddleware";
 
 const userRoutes: Router = express.Router();
 
-userRoutes.post('/',isValid, httpCreateUser);
+userRoutes.post('/', httpCreateUser);
 userRoutes.get('/', isAdmin,httpGetUsers);
 userRoutes.get('/:id', httpGetOneUser);
 userRoutes.patch('/:id',httpUpdateOneUser);

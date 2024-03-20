@@ -7,6 +7,8 @@ export const httpCreateUser = async (req: Request, res: Response) => {
   try {
     const { names, email} = req.body;
     const { password } = req.body;
+    const { role } = req.body;
+
     const hashedPassword = await bcrypt.hash(password, 10); 
 
 
@@ -14,6 +16,7 @@ export const httpCreateUser = async (req: Request, res: Response) => {
             names: names,
             email: email,
             password: hashedPassword,
+            role: role
           });
           await user.save();
           res.status(201).json({ message: "user registered successfully ", data: user });
@@ -84,6 +87,7 @@ export const httpUpdateOneUser = async (req: Request, res: Response) => {
 // delete User
 export const deletesingleUser = async (req: Request, res: Response) => {
   try {
+    
     await User.deleteOne({ _id: req.params.id });
     res.status(204).send();
   } catch (error) {
