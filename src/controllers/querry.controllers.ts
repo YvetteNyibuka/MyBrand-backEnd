@@ -14,8 +14,8 @@ export const httpCreateQuerry = async (req: Request, res: Response) => {
     await querry.save();
     res.status(201).json({ message: 'querry created', data: querry });
   } catch (error) {
-    console.error('Error creating querry:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    // console.error('Error creating querry:', error);
+    // res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -26,10 +26,10 @@ export const httpGetQuerries = async (req: Request, res: Response) => {
     const querries:any = await Querry.find({});    
     res.status(200).json({ message: "All querries", data: querries });
   } catch (error: any) {
-    console.error("Error fetching querries:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+  //   console.error("Error fetching querries:", error);
+  //   res
+  //     .status(500)
+  //     .json({ message: "Internal server error", error: error.message });
   }
 };
 

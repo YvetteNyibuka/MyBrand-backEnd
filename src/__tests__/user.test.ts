@@ -16,6 +16,7 @@ let token: string;
 let id: mongoose.Types.ObjectId;
 let userNames: mongoose.Types.ObjectId;
 let userId: mongoose.Types.ObjectId;
+let querryId: mongoose.Types.ObjectId;
 
 dotenv.config()
 const devDatabaseURI = process.env.TEST_DATABASE_URL as string;
@@ -46,7 +47,7 @@ describe("Welcome to my blog", () => {
   describe("Users Api crud", () => {
     test("it should return 403 if is not authorized", async () => {
       const { body } = await request(app)
-        .get("/api/v1/user/register")
+        .get("/api/v1/users")
         .expect("Content-Type", /json/)
         .expect(403);
 
@@ -54,7 +55,7 @@ describe("Welcome to my blog", () => {
     });
     test("It should return signup and login", async () => {
       const response = await request(app)
-        .post("/api/v1/user/register")
+        .post("/api/v1/users/register")
         .send(signUpData)
         .expect(201);
         userNames = response.body.data.names;
@@ -98,7 +99,7 @@ describe("Welcome to my blog", () => {
 // get all users tests
 test("it should return 200 and the list of users", async () => {
   const usersResponse = await request(app)
-  .get("/api/v1/user/register")
+  .get("/api/v1/users")
   .set('Authorization', `Bearer ${token}`)
   .expect(200)
   })  
@@ -256,6 +257,82 @@ test('should create a blog and return 400 if no image', async () => {
 test('it should return 204 id blog is deleted', async () =>{
   const deleteBlog = await request(app)
   .delete(`/api/v1/blog/${id}`)
+  .set('Authorization', `Bearer ${token}`)
+  .expect(204)
+})
+
+// get a single user test
+test('it should return 200 and single user details', async () =>{
+  const user = await request(app)
+  .get(`/api/v1/users/${userId}`)
+  .set('Authorization', `Bearer ${token}`)
+  .expect(200)
+})
+// get a single user who is not available
+test('it should return 404 when user not found', async () =>{
+  const user = await request(app)
+  .get(`/api/v1/users/65f465abd1370247463b3952`)
+  .set('Authorization', `Bearer ${token}`)
+  .expect(404)
+})
+
+test('it should return 200 when user updated successfully', async () =>{
+  const user = await request(app)
+    .patch(`/api/v1/users/${userId}`)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(200); 
+});
+
+// update a single user who is not available
+test('it should return 404 when user to be updated is not found', async () =>{
+  const user = await request(app)
+  .patch(`/api/v1/users/65f465abd1370942463b3952`)
+  .set('Authorization', `Bearer ${token}`)
+  .expect(404)
+})
+
+//create a querry
+test('it should return 201 when a querry is created', async () =>{
+  const querryData = {
+    fullNames: 'Yvette',
+    email: 'test@example.com',
+    subject: 'test',
+    message: 'test message',
+  }
+  const response = await request(app)
+  .post("/api/v1/querries")
+  .send(querryData)
+  .expect(201);
+  querryId = response.body;
+})
+//get all queries
+test('it should return 200 and the list of queries', async () =>{
+
+  const response = await request(app)
+  .get("/api/v1/querries")
+  .set('Authorization', `Bearer ${token}`)
+  .expect(200);
+})
+
+// get a single querry test
+test('it should return 200 and single querry details', async () =>{
+  const querry = await request(app)
+  .get(`/api/v1/querries`)
+  .set('Authorization', `Bearer ${token}`)
+  .expect(200)
+})
+// get a single querry which is not available
+test('it should return 404 when querry not found', async () =>{
+  const user = await request(app)
+  .get(`/api/v1/querries/65f465abd1370247463b3952`)
+  .set('Authorization', `Bearer ${token}`)
+  .expect(404)
+})
+
+// delete a blog
+test('it should return 204 id user is deleted', async () =>{
+  const deleteBlog = await request(app)
+  .delete(`/api/v1/users/${userId}`)
   .set('Authorization', `Bearer ${token}`)
   .expect(204)
 })

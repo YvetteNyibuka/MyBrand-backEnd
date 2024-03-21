@@ -12,7 +12,7 @@ apiRouter.use('/blog', blogRoutes);
 apiRouter.use('/blog', commentRouter)
 apiRouter.use('/blog', likeRouter);
 apiRouter.use('/querries', querryRouter);
-apiRouter.use('/user/register', userRouter);
+apiRouter.use('/users', userRouter);
 apiRouter.use('/user/login', loginRouter);
 export default apiRouter;
 
