@@ -23,7 +23,7 @@ cloudinary.config({
 app.use(express.json());
 
 app.use('/api/v1', apiRouter);
-app.use('/api/v1/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
+app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(docs));
 app.get('/api/v1', (req: Request, res: Response) => {
   res.status(200).json({ message: 'Welcome to my blogs API' });
 });
