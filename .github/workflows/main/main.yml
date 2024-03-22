@@ -22,10 +22,10 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Install npm dev dependencies
-        run: yarn add jest coveralls
+        run: npm add jest coveralls
 
       - name: Run tests with coverage
-        run: yarn run coverage
+        run: npm run coverage
