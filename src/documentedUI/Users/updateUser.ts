@@ -10,30 +10,31 @@ export default {
         ],
         parameters:[
             {
-            name:"userId",
-            in:"path",
-            schema:{
-                type:"string"
-            },
-            required:true
+                name:"userId",
+                in:"path",
+                schema:{
+                    type:"string"
+                },
+                required:true
             }
         ],
         requestBody:{
-            content :{
+            content:{
                 "application/json": {
                     schema:{
                         type:"object",
                         properties:{
                             names:{type:"string", example:"user names"},
-                            email:{type:"string", example:"Yvette"},
+                            email:{type:"string", example:"user@example.com"},
+                            password:{type:"string", example:"Yvette@123"},
                         },
-                        required:["names", "email"]
+                        required:["names", "email", "password"]
                     },
                 },
             },
         },
         responses:{
-            "200":{
+            "201":{
                 description:"User was updated",
                 content:{
                     "application/json":{

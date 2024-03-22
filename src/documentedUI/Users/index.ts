@@ -4,7 +4,7 @@ import loginUser from "./login";
 import getSingleUser from "./gettUserById";
 import deleteUser from "./deleteUser";
 import updateUser from "./updateUser";
-
+import getBlogs from "../Blogs/getBlogs";
 
 export default {
 
@@ -24,6 +24,9 @@ export default {
         },
         '/api/v1/user/login': {
             ...loginUser,
+        },
+        '/api/v1/blog': {
+            ...getBlogs,
         },
     
       
