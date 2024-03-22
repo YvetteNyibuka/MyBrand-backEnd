@@ -288,8 +288,6 @@ test('it should return 200 when user updated successfully', async () =>{
     .send(updatingData)
     .expect(200); 
 
-console.log(user);
-
 });
 
 
