@@ -6,8 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/js/index.js",
-    "test": "jest --watchAll --no-cache --coverage",
-    "test:ci": "jest --coverage",
+    "test": "jest --no-cache --coverage",
+    "test-test": "jest --watchAll --no-cache --detectOpenHandles",
+    "test:ci": "jest --detectOpenHandles --coverage",
     "dev": "ts-node-dev ./src/index.ts"
   },
   "author": "",

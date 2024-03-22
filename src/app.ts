@@ -8,7 +8,6 @@ require('dotenv').config();
 
 
 const app: Express = express();
-app.use(cors());
 app.use(
   express.urlencoded({
     extended: true,
@@ -20,6 +19,23 @@ cloudinary.config({
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
+const corsOpts = {
+  origin: '*',
+  
+  methods: [
+  'GET',
+  'POST',
+  'DELETE',
+  'PATCH',
+  'PUT'
+  ],
+  
+  allowedHeaders: [
+  'Content-Type',
+  'Authorization',
+  ],
+  };
+app.use(cors(corsOpts));
 app.use(express.json());
 
 app.use('/api/v1', apiRouter);

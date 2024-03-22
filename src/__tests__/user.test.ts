@@ -114,6 +114,7 @@ test("it should return 200 and the list of users", async () => {
   };
 
   const responsez = await request(app)
+
     .post('/api/v1/blog')
     .set('Authorization', `Bearer ${token}`)
     .field('title', blogData.title)
@@ -181,7 +182,6 @@ test('it shoult return 201 and updated blog data', async () =>{
       fs.readFileSync(path.join(__dirname, "im.jpg")),
       "im.jpg",
     )
-    
     .expect(201)
 })
 test('it shoult return 404 if blog to update not found', async () =>{

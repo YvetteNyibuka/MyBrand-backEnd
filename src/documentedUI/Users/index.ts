@@ -5,6 +5,7 @@ import getSingleUser from "./gettUserById";
 import deleteUser from "./deleteUser";
 import updateUser from "./updateUser";
 import getBlogs from "../Blogs/getBlogs";
+import addBlog from "../Blogs/createBlog";
 
 export default {
 
@@ -27,6 +28,7 @@ export default {
         },
         '/api/v1/blog': {
             ...getBlogs,
+            ...addBlog
         },
     
       
