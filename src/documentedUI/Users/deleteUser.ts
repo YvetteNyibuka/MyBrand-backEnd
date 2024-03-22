@@ -20,7 +20,7 @@ export default {
         ],
         responses: {
             "200": {
-                description: "User was obtained",
+                description: "No content",
                 content: {
                     "application/json": {
                         schema: {

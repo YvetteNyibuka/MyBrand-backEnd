@@ -11,7 +11,6 @@ import fs from 'fs';
 import path from 'path';
 const testImage = path.join(__dirname, 'im.jpg');
 
-
 let token: string;
 let id: mongoose.Types.ObjectId;
 let userNames: mongoose.Types.ObjectId;
@@ -174,7 +173,6 @@ test('it shoult return 201 and updated blog data', async () =>{
 
   const updatedResponse = await request(app)
     .patch(`/api/v1/blog/${id}`)
-
     .set('Authorization', `Bearer ${token}`)
     .field('title', blogData.title)
     .field('description', blogData.description)
@@ -277,11 +275,24 @@ test('it should return 404 when user not found', async () =>{
 })
 
 test('it should return 200 when user updated successfully', async () =>{
-  const user = await request(app)
+  const updatingData = {
+    names: 'updated user',
+    email: 'updated@gmail.com',
+    password: 'updated@123',
+    role: 'admin'
+  };
+  
+  const user = await request(app)  
     .patch(`/api/v1/users/${userId}`)
     .set('Authorization', `Bearer ${token}`)
+    .send(updatingData)
     .expect(200); 
+
+console.log(user);
+
 });
+
+
 
 // update a single user who is not available
 test('it should return 404 when user to be updated is not found', async () =>{
