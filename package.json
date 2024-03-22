@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/js/index.js",
-    "test": "jest --watchAll --no-cache",
+    "test": "jest --watchAll --no-cache --coverage",
     "test:ci": "jest --coverage",
     "dev": "ts-node-dev ./src/index.ts"
   },
