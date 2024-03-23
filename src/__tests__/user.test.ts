@@ -87,13 +87,11 @@ describe("Welcome to my blog", () => {
     });
     
     //get blog tests
-  test("get blog all blogs tests", async () => {
-  const response = await request(app)
-      .get("/api/v1/blog")
-      .expect(200)
-      
-
-})
+test("it should return 200 and the list of blogs", async () => {
+  const blogsResponse = await request(app)
+  .get("/api/v1/blog")
+  .expect(200)
+  })  
 
 // get all users tests
 test("it should return 200 and the list of users", async () => {
@@ -146,7 +144,7 @@ id = responsez.body.data._id;
       "coverImage",
       fs.readFileSync(path.join(__dirname, "im.jpg")),
       "im.jpg",
-      )
+    )
     .expect(400)
 });
  
@@ -303,10 +301,10 @@ test('it should return 404 when user to be updated is not found', async () =>{
 //create a querry
 test('it should return 201 when a querry is created', async () =>{
   const querryData = {
-    fullNames: 'Yvette',
-    email: 'test@example.com',
-    subject: 'test',
-    message: 'test message',
+      fullNames: "IZANYIBUKA",
+      email: "izanyibukayvette1@gmail.com",
+      subject: "fourth querry subject",
+      message: "fourth querry message"
   }
   const response = await request(app)
   .post("/api/v1/querries")

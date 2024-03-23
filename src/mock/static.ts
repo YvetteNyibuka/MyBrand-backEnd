@@ -1,12 +1,12 @@
 export const signUpData = {
     names: 'admin',
     email: 'admin@gmail.com',
-    password: 'admin@123',
+    password: 'Admin@123',
     role: 'admin'
   };
 export const signInData = {
     email: 'admin@gmail.com',
-    password: 'admin@123',
+    password: 'Admin@123',
   };
 export const signInWrongPassword = {
     email: 'admin@gmail.com',

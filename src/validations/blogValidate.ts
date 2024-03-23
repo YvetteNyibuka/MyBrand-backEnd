@@ -3,7 +3,7 @@ import Joi, { Schema } from 'joi';
 const blogSchema: Schema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),
-  coverImage: Joi.string().required()
+  coverImage: Joi.string()
 });
 
 const validateBlog = (blogData: Record<string, any>) => {
