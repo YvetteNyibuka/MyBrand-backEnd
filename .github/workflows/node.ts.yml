@@ -33,6 +33,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -45,3 +46,10 @@ jobs:
 
       - name: Test
         run: npm test
+      
+      - name: Install coveralls package
+        run: npm install coveralls
+      - name: Report coverage to Coveralls
+        run: npm run coveralls
+        env:
+            COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_REPO_TOKEN }}

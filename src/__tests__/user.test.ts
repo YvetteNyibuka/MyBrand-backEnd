@@ -121,7 +121,7 @@ test("it should return 200 and the list of users", async () => {
       "coverImage",
       fs.readFileSync(path.join(__dirname, "im.jpg")),
       "im.jpg",
-      )
+)
     .expect(201)
 id = responsez.body.data._id;
   expect(responsez.body).toHaveProperty('message', 'Blog created');

@@ -1,27 +1,49 @@
 import { Request, Response } from "express";
 import User from "../../models/auth/userSchema";
 import bcrypt from 'bcrypt'
+import { date } from "joi";
 
 // create a user
 export const httpCreateUser = async (req: Request, res: Response) => {
   try {
-    const { names, email} = req.body;
+    const { names, email } = req.body;
     const { password } = req.body;
     const { role } = req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10); 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({
+          message: "Email already registered. Please choose another one.",
+        });
+    }
+    const user = new User({
+      names: names,
+      email: email,
+      password: hashedPassword,
+      role: role,
+    });
+    await user.save();
+    const savedUser = await User.findById(user._id);
+   if(savedUser) {
+    const response = {
+      _id: savedUser._id,
+      names: savedUser.names,
+      email: savedUser.email,
+      role: savedUser.role,  
+      createdAt: savedUser.createdAt,
+      updatedAt: savedUser.updatedAt
+    };
 
 
-          const user = new User({
-            names: names,
-            email: email,
-            password: hashedPassword,
-            role: role
-          });
-          await user.save();
-          res.status(201).json({ message: "user registered successfully ", data: user });
-        }
-    catch (error) {
+    res
+      .status(201)
+      .json({ message: "user registered successfully ", data: response });
+  }
+  } catch (error) {
     // console.error("Error error registering user:", error);
     // res.status(500).json({ message: "Internal server error" });
   }
