@@ -14,7 +14,7 @@ const querryRoutes: Router = express.Router();
 
 querryRoutes.post('/', isValid,httpCreateQuerry );
 querryRoutes.get('/',isAdmin, httpGetQuerries);
-querryRoutes.get('/:id', httpGetOneQuerry);
+querryRoutes.get('/:id', isAdmin, httpGetOneQuerry);
 querryRoutes.delete('/:id',isAdmin, deletesingleQuerry);
 
 export default querryRoutes;
