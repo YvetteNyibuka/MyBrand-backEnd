@@ -47,6 +47,9 @@ jobs:
       - name: Install coveralls package
         run: npm install coveralls
 
+      - name: Run coveralls
+        run: npm run coveralls
+
       - name: Coveralls Report
         uses: coverallsapp/github-action@v2.2.3
         env:
