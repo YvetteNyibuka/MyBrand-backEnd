@@ -47,5 +47,5 @@ jobs:
       - name: Test
         run: npm test
       - name: badge
-        run: npm test:ci
+        run: npm run test:ci
       - run: npx update-badge
