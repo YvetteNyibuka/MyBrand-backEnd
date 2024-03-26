@@ -39,12 +39,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-
-      - run: npm run build --if-present
-     
       - name: Install coveralls package
         run: npm install
-
+     
+      - run: npm run build --if-present
+     
       - name: Run coveralls
         run: npm run coveralls
 
