@@ -6,6 +6,11 @@ import deleteUser from "./deleteUser";
 import updateUser from "./updateUser";
 import getBlogs from "../Blogs/getBlogs";
 import addBlog from "../Blogs/createBlog";
+import getOneBlog from "../Blogs/getOneBlogById";
+import deleteBlog from "../Blogs/deleteBlog";
+import addComment from "../Comments/addComment";
+import allComments from "../Comments/getCommentsByBlogId"
+import addLike from "../Like/addLike";
 
 export default {
 
@@ -29,6 +34,17 @@ export default {
         '/api/v1/blog': {
             ...getBlogs,
             ...addBlog
+        },
+        '/api/v1/blog/{id}': {
+            ...getOneBlog,
+            ...deleteBlog
+        },
+        '/api/v1/blog/{id}/comments': {
+            ...addComment,
+            ...allComments
+        },
+        '/api/v1/blog/{id}/likes': {
+            ...addLike,
         },
     
       

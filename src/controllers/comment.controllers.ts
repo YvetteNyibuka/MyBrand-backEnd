@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 export const createComment = async (req: Request, res: Response) => {
   try {
     const blogId = req.params.blogId;
-
     const token:any = req.headers.authorization?.split(" ")[1]; 
     const decodedToken: any = jwt.verify(token,   process.env.MY_SECRET_KEY || "FYSHAFRW" );
     const username = decodedToken.names;
