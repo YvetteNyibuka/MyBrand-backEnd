@@ -11,6 +11,8 @@ import deleteBlog from "../Blogs/deleteBlog";
 import addComment from "../Comments/addComment";
 import allComments from "../Comments/getCommentsByBlogId"
 import addLike from "../Like/addLike";
+import createQuerry from "../Querries/createQuerry";
+import getQuerries from "../Querries/getQuerries";
 
 export default {
 
@@ -46,6 +48,10 @@ export default {
         '/api/v1/blog/{id}/likes': {
             ...addLike,
         },
+        '/api/v1/querries': {
+            ...createQuerry,
+            ...getQuerries
+        }
     
       
     },

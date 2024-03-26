@@ -9,7 +9,7 @@ export default {
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/components/schemas/Blogs",
+                            $ref: "#/components/schemas/Blog",
                         },
                     },
                 },
