@@ -9,7 +9,9 @@
     "test": "jest --no-cache --detectOpenHandles",
     "test-test": "jest --watchAll --no-cache --detectOpenHandles",
     "test:ci": "jest --detectOpenHandles --coverage",
-    "dev": "ts-node-dev ./src/index.ts"
+    "dev": "ts-node-dev ./src/index.ts",
+    "coveralls": "jest ./src/__tests__/user.test.ts --coverage --forceExit && cat ./coverage/lcov.info | coveralls"
+
   },
   "author": "",
   "license": "ISC",
@@ -36,12 +38,7 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node",
-    "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov"
-    ]
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
