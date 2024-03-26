@@ -57,7 +57,6 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Blogs with comments", data: blogsWithComments });
   } 
   // catch (error: any) {
-  //   console.error("Error fetching blogs with comments:", error);
   //   res.status(500).json({ message: "Internal server error", error: error.message });
   // }
 // };
@@ -100,7 +99,6 @@ export const httpUpdateOneBlog = async (req: Request, res: Response) => {
     res.status(201).json({ message: "Blog updated successfully", data: blog });
   }
 //    catch (error) {
-//     console.error("Error updating blog:", error);
 //     res.status(500).json({ message: "Internal server error" });
 //   }
 // };

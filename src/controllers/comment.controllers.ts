@@ -17,7 +17,6 @@ export const createComment = async (req: Request, res: Response) => {
     await comment.save();
     res.status(201).json({ message: 'Comment created', blogId: blogId, data: comment});
   } catch (error) {
-    console.error('Error creating comment:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
