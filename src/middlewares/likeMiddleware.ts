@@ -14,7 +14,6 @@ export const checkIfLiked: RequestHandler = async (req: Request, res: Response, 
 
     next();
   } catch (error) {
-    console.error('Error checking if liked:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };

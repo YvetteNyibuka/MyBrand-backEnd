@@ -66,8 +66,6 @@ describe("Welcome to my blog", () => {
         .send(signInData)
         .expect(200);
       token = loginResponse.body.token;
-      //  console.log(token);
-       
     });
     
 

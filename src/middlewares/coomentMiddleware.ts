@@ -8,7 +8,6 @@ const isValid = (req: Request, res: Response, next: NextFunction) => {
  try{
  next();
  } catch(error){
-   console.log("Error: ", error);
    
  }
   
