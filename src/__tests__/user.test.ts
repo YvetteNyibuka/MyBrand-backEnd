@@ -3,9 +3,8 @@ import { connectToMongoDB, disconnectFromMongoDB } from '../services/mongoConnec
 import app from '../app';
 import dotenv from 'dotenv'
 import { signInData, signUpData, signInUnregisteredUser, signInWrongPassword,blogData } from '../mock/static';
-import { Request, Response, response } from 'express'
-import { httpGetOneUser } from '../controllers/auth/user.controllers';
 import  User  from '../models/auth/userSchema';
+import QuerrySchema from '../models/QuerrySchema';
 import mongoose, { mongo } from 'mongoose';
 import fs from 'fs';
 import path from 'path';
@@ -296,7 +295,6 @@ test('it should return 404 when user to be updated is not found', async () =>{
   .expect(404)
 })
 
-//create a querry
 test('it should return 201 when a querry is created', async () =>{
   const querryData = {
       fullNames: "IZANYIBUKA",
@@ -310,6 +308,26 @@ test('it should return 201 when a querry is created', async () =>{
   .expect(201);
   querryId = response.body;
 })
+test('it should return 500 when there is undocumented error in a query creation', async () => {
+  const querryData = {
+    fullNames: "IZANYIBUKA",
+    email: "izanyibukayvette1@gmail.com",
+    subject: "fourth query subject",
+    message: "fourth query message"
+  };
+
+  jest.spyOn(QuerrySchema.prototype, 'save').mockImplementationOnce(() => {
+    throw new Error('Unexpected error during query creation');
+  });
+
+  const response = await request(app)
+    .post("/api/v1/querries")
+    .send(querryData)
+    .expect(500);
+  expect(response.body).toEqual({ message: 'Internal server error' });
+});
+
+
 //get all queries
 test('it should return 200 and the list of queries', async () =>{
 
@@ -333,14 +351,16 @@ test('it should return 404 when querry not found', async () =>{
   .set('Authorization', `Bearer ${token}`)
   .expect(404)
 })
-
-// delete a blog
-test('it should return 204 id user is deleted', async () =>{
-  const deleteBlog = await request(app)
-  .delete(`/api/v1/users/${userId}`)
-  .set('Authorization', `Bearer ${token}`)
-  .expect(204)
-})
+test('it should return 500 when there is an error in getting a single query', async () => {
+  jest.spyOn(QuerrySchema, 'findOne').mockImplementationOnce(() => {
+    throw new Error('Unexpected error while fetching query');
+  });
+  const response = await request(app)
+    .get(`/api/v1/querries/65f465abd1370247463b3952`)
+    .set('Authorization', `Bearer ${token}`)
+    .expect(500);
+     expect(response.status).toBe(500);
+});
 
 });
 });

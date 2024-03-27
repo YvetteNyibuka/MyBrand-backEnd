@@ -54,7 +54,7 @@ export const deletesingleQuerry = async (req: Request, res: Response) => {
     if(deletedQuery.deletedCount === 0){
       return res.status(404).json({ message:"Querry not found"});
     }
-    res.status(204);
+  res.status(204).json({message: "Querry deleted successfully"});
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
