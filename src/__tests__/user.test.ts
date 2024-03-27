@@ -124,7 +124,7 @@ test("it should return 200 and the list of users", async () => {
 )
     .expect(201)
 id = responsez.body.data._id;
-  expect(responsez.body).toHaveProperty('message', 'Blog created');
+  expect(responsez.body).toHaveProperty('message', 'Blog created successfuly');
   expect(responsez.body.data).toHaveProperty('title', blogData.title);
   expect(responsez.body.data).toHaveProperty('description', blogData.description);
 });

@@ -19,8 +19,8 @@ export default {
             },
         ],
         responses: {
-            "200": {
-                description: "No content",
+            "204": {
+                description: "Blog deleted successfully",
                 content: {
                     "application/json": {
                         schema: {
@@ -30,7 +30,10 @@ export default {
                 },
             },
             "404": {
-                description: "Blog was not found",
+                description: "Blog not found",
+            },
+            "500": {
+                description: "Internal server error",
             },
         },
 

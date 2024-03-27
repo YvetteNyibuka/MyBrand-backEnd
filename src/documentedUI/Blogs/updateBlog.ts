@@ -35,7 +35,7 @@ export default {
             }
         },
         responses:{
-            "200":{
+            "201":{
                 description:"Blog was updated",
                 content:{
                     "application/json":{
@@ -46,7 +46,7 @@ export default {
                 }
             },
             "400":{
-                description:"Bad Request",
+                description:"Blog not found",
                 content:{
                     "application/json":{
                         example:{
@@ -56,17 +56,11 @@ export default {
                     }
                 }
             },
-            "401":{
-                description:"Unauthorized",
-                content:{
-                    "application/json":{
-                        example:{
-                            status:false,
-                            message:"Unauthorized"
-                        }
-                    }
+            "500":{
+                description:"Internal server error",
+                   
                 }
             }
         }
     }
-}
+

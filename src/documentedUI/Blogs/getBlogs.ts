@@ -5,7 +5,7 @@ export default {
         operationId: "getAllBlogs",
         responses: {
             "200": {
-                description: "All blogs retrieved",
+                description: "Blogs with comments",
                 content: {
                     "application/json": {
                         schema: {
@@ -15,7 +15,10 @@ export default {
                 },
             },
             "404": {
-                description: "Blogs not found",
+                description: "No blogs found",
+            },
+            "500": {
+                description: "Internal server error",
             },
         },
     },

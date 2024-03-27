@@ -20,7 +20,7 @@ export default {
         ],
         responses:{
             '200':{
-                description:'Get comments attached to the blog',
+                description:'Comments found',
                 content:{
                     'application/json':{
                         schema:{
@@ -29,8 +29,8 @@ export default {
                     },
                 },
             },
-            '404':{
-                description:'no comments found found',
+            '500':{
+                description:'Internal server error',
             },
         },
     },

@@ -25,7 +25,7 @@ export default {
         },
         responses: {
             "201": {
-                description: "Blog added successfully",
+                description: "Blog created successfuly",
                 content: {
                     "multipart/form-data": {
                         schema: {
@@ -46,7 +46,7 @@ export default {
                 },
             },
             "500": {
-                description: "Internal Server Error",
+                description: "internal server error",
                 content: {
                     "multipart/form-data": {
                         example: {

@@ -33,7 +33,7 @@ export default {
         },
         responses: {
             "201": {
-                description: "comment added successfully",
+                description: "Comment added to blog successfuly",
                 content: {
                     "application/json": {
                         schema: {
@@ -42,19 +42,8 @@ export default {
                     },
                 },
             },
-            "400": {
-                description: "Bad Request",
-                content: {
-                    "application/json": {
-                        example: {
-                            status: false,
-                            message: "Please fill all required fields",
-                        },
-                    },
-                },
-            },
             "500": {
-                description: "Internal Server Error",
+                description: "Internal server error",
                 content: {
                     "application/json": {
                         example: {

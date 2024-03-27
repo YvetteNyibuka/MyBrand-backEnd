@@ -10,7 +10,7 @@ export default {
         ],
         responses: {
             "200": {
-                description: "All users retrieved",
+                description: "All users registered",
                 content: {
                     "application/json": {
                         schema: {
@@ -20,7 +20,10 @@ export default {
                 },
             },
             "404": {
-                description: "Users were not found",
+                description: "No users found",
+            },
+            "500": {
+                description: "Internal server error",
             },
         },
     },

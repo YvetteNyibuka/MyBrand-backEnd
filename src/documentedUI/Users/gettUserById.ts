@@ -20,7 +20,7 @@ export default {
         ],
         responses:{
             '200':{
-                description:'Get Single User',
+                description:'User found',
                 content:{
                     'application/json':{
                         schema:{
@@ -30,7 +30,10 @@ export default {
                 },
             },
             '404':{
-                description:'User was not found',
+                description:'User not found',
+            },
+            '500':{
+                description:'Internal server error',
             },
         },
     },

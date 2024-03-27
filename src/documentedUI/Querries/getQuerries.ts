@@ -10,7 +10,7 @@ export default {
         ],
         responses: {
             "200": {
-                description: "All Querries retrieved",
+                description: "All querries",
                 content: {
                     "application/json": {
                         schema: {
@@ -19,8 +19,8 @@ export default {
                     },
                 },
             },
-            "404": {
-                description: "Querries were not found",
+            "500": {
+                description: "Internal server error",
             },
         },
     },

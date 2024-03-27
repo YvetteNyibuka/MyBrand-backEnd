@@ -5,11 +5,9 @@ import streamifier from "streamifier";
 import Comment from "../models/commentSchema";
 import Like from "../models/likeSchema";
 
-// create a blog
 export const httpCreateBlog = async (req: Request, res: Response) => {
   try {
     const { title, description } = req.body;
-    // if(!title || !description)return res.status(400).send({message:"Error creating blog"});  
     const imageFile = req.file;
     if (!imageFile) {
       res.status(400).json({
@@ -28,24 +26,28 @@ export const httpCreateBlog = async (req: Request, res: Response) => {
             coverImage: cloudinaryResult.secure_url,
           });
           await blog.save();
-          res.status(201).json({ message: "Blog created", data: blog });
+          res.status(201).json({ message: "Blog created successfuly", data: blog });
         }
       
     );
   
     streamifier.createReadStream(imageFile.buffer).pipe(result);
   } catch (error) {
-    
+    res.status(500).json({message: "internal server error", error})
   }
 };
 
 
 export const httpGetBlogs = async (req: Request, res: Response) => {
-  // try {
+  try {
     const blogs = await Blog.find({});
+
+    if (blogs.length === 0) {
+      return res.status(404).json({ message: "No blogs found", data: null });
+    }
+
     const blogsWithComments = await Promise.all(blogs.map(async (blog) => {
-      
-      const comments = await Comment.find({blogId: blog._id});
+      const comments = await Comment.find({ blogId: blog._id });
       const likes = await Like.find({ blogId: blog._id });
       return {
         ...blog.toObject(),
@@ -54,15 +56,16 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
       };
     }));
 
-    res.status(200).json({ message: "Blogs with comments", data: blogsWithComments });
+    return res.status(200).json({ message: "Blogs with comments", data: blogsWithComments });
   } 
-  // catch (error: any) {
-  //   res.status(500).json({ message: "Internal server error", error: error.message });
-  // }
-// };
+  catch (error: any) {
+    return res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
+
 
 export const httpGetOneBlog = async (req: Request, res: Response) => {
-  // try {
+  try {
     const singleBlog: any = await Blog.findOne({ _id: req.params.id });
     if (!singleBlog) {
       return res.status(404).json({ message: "Blog not found", data: {} });
@@ -71,15 +74,13 @@ export const httpGetOneBlog = async (req: Request, res: Response) => {
     const singleBloglikes = await Like.find({blogId: singleBlog._id})
     res.status(200).json({ message: "Blog found", data: {singleBlog, singleBlogComments, singleBloglikes} });
   }
-  //  catch (error) {
-  //   console.error("Error fetching blog:", error);
-  //   res.status(500).json({ message: "Internal server error" });
-  // }
-// };
+   catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-// update single blogs
 export const httpUpdateOneBlog = async (req: Request, res: Response) => {
-  // try {
+  try {
     const blogId = req.params.id.trim();
 
     const blog = await Blog.findOne({ _id: blogId });
@@ -87,30 +88,23 @@ export const httpUpdateOneBlog = async (req: Request, res: Response) => {
     if (!blog) {
       return res.status(404).json({ message: "Blog not found", data: null });
     }
-
-    // if (req.body.title) {
-    //   blog.title = req.body.title;
-    // }
-    // if (req.body.description) {
-    //   blog.description = req.body.description;
-    // }
-
     await blog.save();
     res.status(201).json({ message: "Blog updated successfully", data: blog });
   }
-//    catch (error) {
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
-
-// delete blog
-export const deletesingleBlog = async (req: Request, res: Response) => {
-  // try {
-    await Blog.deleteOne({ _id: req.params.id });
-    res.status(204).send();
+   catch (error) {
+    res.status(500).json({ message: "Internal server error" });
   }
-//    catch (error) {
-//     console.error("Error deleting blog:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
+};
+
+export const deletesingleBlog = async (req: Request, res: Response) => {
+  try {
+    const deletedBlog = await Blog.deleteOne({ _id: req.params.id });
+    if(deletedBlog.deletedCount === 0) {
+      return res.status(404).json({ message: "Blog not found"});
+    }
+    return res.status(204).json({ message: "Blog deleted successfully"});;
+  }
+   catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

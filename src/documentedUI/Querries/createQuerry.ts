@@ -21,22 +21,11 @@ export default {
         },
         responses: {
             "201": {
-                description: "Querry added successfully",
+                description: "Message sents successfully",
                 content: {
                     "application/json": {
                         schema: {
                             $ref: "#/components/schemas/Querries",
-                        },
-                    },
-                },
-            },
-            "400": {
-                description: "Bad Request",
-                content: {
-                    "application/json": {
-                        example: {
-                            status: false,
-                            message: "Please fill all required fields",
                         },
                     },
                 },
@@ -47,7 +36,7 @@ export default {
                     "application/json": {
                         example: {
                             status: false,
-                            message: "An error occurred while adding the querry",
+                            message: "An error occurred while sending the querry",
                         },
                     },
                 },

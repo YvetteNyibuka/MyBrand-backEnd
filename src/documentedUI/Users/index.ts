@@ -13,6 +13,8 @@ import allComments from "../Comments/getCommentsByBlogId"
 import addLike from "../Like/addLike";
 import createQuerry from "../Querries/createQuerry";
 import getQuerries from "../Querries/getQuerries";
+import getOneQuerry from "../Querries/getOneQuery";
+import deleteQuerry from "../Querries/deleteQuerry";
 
 export default {
 
@@ -51,8 +53,10 @@ export default {
         '/api/v1/querries': {
             ...createQuerry,
             ...getQuerries
+        },
+        '/api/v1/querries/{id}': {
+            ...getOneQuerry,
+            ...deleteQuerry
         }
-    
-      
     },
 };

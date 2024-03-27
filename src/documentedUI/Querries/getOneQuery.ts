@@ -1,8 +1,8 @@
 export default {
     get:{
-        tags:['Blogs'],
-        description:'Get Single blog',
-        operationId:'getSingleBlog',
+        tags:['Querries'],
+        description:'Get Single querry',
+        operationId:'getSingleQuerry',
         security:[
             {
                 BearerAuth:[]
@@ -20,17 +20,17 @@ export default {
         ],
         responses:{
             '200':{
-                description:'Blog not found',
+                description:'Querry found',
                 content:{
                     'application/json':{
                         schema:{
-                            $ref:'#/components/schemas/Blog',
+                            $ref:'#/components/schemas/Querries',
                         },
                     },
                 },
             },
             '404':{
-                description:'Blog found',
+                description:'Querry not found',
             },
             '500':{
                 description:'Internal server error',

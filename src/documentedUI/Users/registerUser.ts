@@ -20,7 +20,7 @@ export default {
         },
         responses: {
             "201": {
-                description: "User added successfully",
+                description: "user registered successfully",
                 content: {
                     "application/json": {
                         schema: {
@@ -30,7 +30,7 @@ export default {
                 },
             },
             "400": {
-                description: "Bad Request",
+                description: "Email already registered. Please choose another one.",
                 content: {
                     "application/json": {
                         example: {
@@ -41,7 +41,7 @@ export default {
                 },
             },
             "500": {
-                description: "Internal Server Error",
+                description: "Internal server error",
                 content: {
                     "application/json": {
                         example: {

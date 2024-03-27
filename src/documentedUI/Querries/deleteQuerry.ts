@@ -1,8 +1,8 @@
 export default {
     delete:{
-        tags: ["Users"],
-        description: "Delete user",
-        operationId: "deleteUser",
+        tags: ["Querries"],
+        description: "Delete querry",
+        operationId: "deleteQuerry",
         security: [
             {
               BearerAuth: [],
@@ -20,14 +20,17 @@ export default {
         ],
         responses: {
             "204": {
-                description: "User deleted successfullyt",
+                description: "Querry deleted successfullyt",
                 content: {
                     "application/json": {
                         schema: {
-                            $ref: "#/components/schemas/Users",
+                            $ref: "#/components/schemas/Querries",
                         },
                     },
                 },
+            },
+            "404": {
+                description: "Querry not found",
             },
             "500": {
                 description: "Internal server error",

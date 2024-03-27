@@ -46,6 +46,9 @@ export default {
             '404': {
                 description: 'User not found',
             },
+            '500': {
+                description: 'Internal server error',
+            },
         },
     },
 };
