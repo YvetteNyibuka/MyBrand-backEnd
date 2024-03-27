@@ -11,7 +11,6 @@
     "test:ci": "jest --detectOpenHandles --coverage",
     "dev": "ts-node-dev ./src/index.ts",
     "coveralls": "jest ./src/__tests__/user.test.ts --coverage --forceExit --detectOpenHandles && cat ./coverage/lcov.info | coveralls"
-
   },
   "author": "",
   "license": "ISC",
@@ -31,6 +30,7 @@
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.1.0",
+    "punycode": "^2.3.1",
     "sharp": "^0.33.2",
     "streamifier": "^0.1.1",
     "supertest": "^6.3.4",
