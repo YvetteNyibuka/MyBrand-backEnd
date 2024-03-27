@@ -9,23 +9,22 @@ dotenv.config();
 export const likeBlog = async (req: Request, res: Response) => {
   try {
     const blogId = req.params.blogId;
-    const token:any = req.headers.authorization?.split(" ")[1]; 
+    const token: any = req.headers.authorization?.split(" ")[1]; 
     const { isLiked } = req.body;
 
     if (!token) {
-      return res.status(401).json({ message: 'No token provided' });
+      return res.status(401).json({ message: 'Login first' });
     }
 
-    const decodedToken: any = jwt.verify(token,   process.env.MY_SECRET_KEY || "FYSHAFRW" );
+    const decodedToken: any = jwt.verify(token, process.env.MY_SECRET_KEY || "FYSHAFRW");
     const userId = decodedToken._id;
+    const existingLike = await Like.findOne({ blogId, userId });
 
-    // Check if the user has already liked the blog
-    const existingLike = await Like.findOne({ blogId, userId, isLiked });
     if (existingLike) {
-      return res.status(400).json({ message: 'Blog already liked by this user' });
+      await Like.deleteOne({ _id: existingLike._id });
+      return res.status(200).json({ message: 'Blog like removed successfully' });
     }
 
-    // Create a new like
     const like = new Like({ userId, isLiked, blogId });
     await like.save();
 
@@ -40,9 +39,7 @@ export const getLikesByBlogId = async (req: Request, res: Response) => {
   try {
     const { blogId } = req.params;
 
-    // Find all likes for the specified blogId
     const likes = await Like.find({ blogId });
-    
     res.status(200).json({ message: 'Likes found', data: likes });
   } catch (error) {
     console.error('Error fetching likes:', error);

@@ -2,6 +2,8 @@ import mongoose, { Schema } from 'mongoose';
 import { Types } from 'mongoose';
 
 export interface Blog extends Document {
+ category: string;
+ author: string;
  title: string;
  description: string;
  coverImage: string;
@@ -11,6 +13,14 @@ export interface Blog extends Document {
 
 const BlogSchema: Schema = new mongoose.Schema(
  {
+    category: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,

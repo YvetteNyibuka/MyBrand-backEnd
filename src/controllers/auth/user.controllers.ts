@@ -67,7 +67,14 @@ export const httpGetOneUser = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found", data: {} });
     }
 
-    res.status(200).json({ message: "User found", data: singleUser });
+    const singleuserdata = {
+      id: singleUser._id,
+      names: singleUser.names,
+      email: singleUser.email,
+      role: singleUser.role
+    }
+
+    res.status(200).json({ message: "User found", data: singleuserdata });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

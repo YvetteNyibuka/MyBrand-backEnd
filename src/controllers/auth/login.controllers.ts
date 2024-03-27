@@ -44,12 +44,18 @@ export const httpLogin = async (req: Request, res: Response) => {
             );
 
             res.setHeader('Authorization', `Bearer ${token}`);
+            const loggedUser = {
+                id: isUserExist._id,
+                names: isUserExist.names,
+                email: isUserExist.email,
+                role: isUserExist.role
+            }
         return res.status(200).json({
             status: 200,
             success: true,
             message: "Successfully logged in",
             token: token,
-            user: isUserExist
+            user: loggedUser
         });
     } catch (error: any) {
         

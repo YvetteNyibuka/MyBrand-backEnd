@@ -103,6 +103,8 @@ test("it should return 200 and the list of users", async () => {
 
  test('should create a blog and return 201 and the blog data', async () => {
   const blogData = {
+    category: "Experience",
+    author: "Sammy",
     title: 'Test Blog Title',
     description: 'This is a test blog description.',
     coverImage: 'im.jpg',
@@ -112,6 +114,8 @@ test("it should return 200 and the list of users", async () => {
 
     .post('/api/v1/blog')
     .set('Authorization', `Bearer ${token}`)
+    .field('category', blogData.category)
+    .field('author', blogData.author)
     .field('title', blogData.title)
     .field('description', blogData.description)
     .attach(
@@ -120,7 +124,7 @@ test("it should return 200 and the list of users", async () => {
       "im.jpg",
 )
     .expect(201)
-id = responsez.body.data._id;
+  id = responsez.body.data._id;
   expect(responsez.body).toHaveProperty('message', 'Blog created successfuly');
   expect(responsez.body.data).toHaveProperty('title', blogData.title);
   expect(responsez.body.data).toHaveProperty('description', blogData.description);
@@ -129,6 +133,8 @@ id = responsez.body.data._id;
 
  test('should create a blog and return 400 while creating blog without title', async () => {
   const blogData = {
+    category: "Experience",
+    author: "Sammy",
     description: 'This is a test blog description.',
     coverImage: 'im.jpg',
   };
@@ -136,7 +142,6 @@ id = responsez.body.data._id;
   const responsez = await request(app)
     .post('/api/v1/blog')
     .set('Authorization', `Bearer ${token}`)
-    
     .attach(
       "coverImage",
       fs.readFileSync(path.join(__dirname, "im.jpg")),
@@ -162,6 +167,8 @@ test('it should return 404 if blog is not founda', async () =>{
 //update single blog test
 test('it shoult return 201 and updated blog data', async () =>{
   const newBlogData = {
+    category: "New Experience",
+    author: "Sammy Joe",
     title: 'New Test Blog Title',
     description: 'New blog description test.',
     coverImage: 'im.jpg',
@@ -170,6 +177,8 @@ test('it shoult return 201 and updated blog data', async () =>{
   const updatedResponse = await request(app)
     .patch(`/api/v1/blog/${id}`)
     .set('Authorization', `Bearer ${token}`)
+    .field('category', blogData.category)
+    .field('author', blogData.author)
     .field('title', blogData.title)
     .field('description', blogData.description)
     .attach(
@@ -181,6 +190,8 @@ test('it shoult return 201 and updated blog data', async () =>{
 })
 test('it shoult return 404 if blog to update not found', async () =>{
   const newBlogData = {
+    category: "Experience",
+    author: "Sammy",
     title: 'New Test Blog Title',
     description: 'New blog description test.',
     coverImage: 'im.jpg',
@@ -233,6 +244,8 @@ test('it should return 201 and liked  data', async () => {
 })
 test('should create a blog and return 400 if no image', async () => {
   const blogData = {
+    category: "Experience",
+    author: "Sammy",
     title: 'Test Blog Title',
     description: 'This is a test blog description.',
   };
@@ -240,6 +253,8 @@ test('should create a blog and return 400 if no image', async () => {
   const responsez = await request(app)
     .post('/api/v1/blog')
     .set('Authorization', `Bearer ${token}`)
+    .field('category', blogData.category)
+    .field('author', blogData.author)
     .field('title', blogData.title)
     .field('description', blogData.description)
     .expect(400)

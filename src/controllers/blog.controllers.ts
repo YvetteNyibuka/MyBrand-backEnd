@@ -7,7 +7,7 @@ import Like from "../models/likeSchema";
 
 export const httpCreateBlog = async (req: Request, res: Response) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, category, author } = req.body;
     const imageFile = req.file;
     if (!imageFile) {
       res.status(400).json({
@@ -21,6 +21,8 @@ export const httpCreateBlog = async (req: Request, res: Response) => {
       async (error, cloudinaryResult: any) => {
        
           const blog = new Blog({
+            category: category,
+            author: author,
             title: title,
             description: description,
             coverImage: cloudinaryResult.secure_url,

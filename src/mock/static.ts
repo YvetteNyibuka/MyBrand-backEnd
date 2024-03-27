@@ -19,6 +19,8 @@ export const signInUnregisteredUser = {
 
   // blogs mocks data
   export const blogData = {
+    category: "Experience",
+    author: "Sammy",
     title: "Test blog title",
     description: "Test blog description",
     coverImage: "image.jpg"
