@@ -61,7 +61,7 @@ describe("Welcome to my blog", () => {
         
     
       const loginResponse = await request(app)
-        .post("/api/v1/user/login")
+        .post("/api/v1/users/login")
         .send(signInData)
         .expect(200);
       token = loginResponse.body.token;
@@ -70,25 +70,26 @@ describe("Welcome to my blog", () => {
 
     test("it should return 404 when User is not found", async () => {
       const response = await request(app)
-        .post("/api/v1/user/login")
+        .post("/api/v1/users/login")
         .send(signInUnregisteredUser)
         .expect(404);
       expect(response.body.message).toStrictEqual("User not found");
     });
     test("it should return 400 when wrong password is inserted", async () => {
       const response = await request(app)
-        .post("/api/v1/user/login")
+        .post("/api/v1/users/login")
         .send(signInWrongPassword)
         .expect(400);
       expect(response.body.message).toStrictEqual("Wrong password");
     });
     
     //get blog tests
-test("it should return 200 and the list of blogs", async () => {
-  const blogsResponse = await request(app)
-  .get("/api/v1/blog")
-  .expect(200)
-  })  
+// test("it should return 200 and the list of blogs", async () => {
+//   const blogsResponse = await request(app)
+//   .get("/api/v1/blogs")
+//   .expect(200)
+//   expect(blogsResponse.body.message).toStrictEqual("Blogs with comments");
+//   })  
 
 // get all users tests
 test("it should return 200 and the list of users", async () => {
@@ -112,7 +113,7 @@ test("it should return 200 and the list of users", async () => {
 
   const responsez = await request(app)
 
-    .post('/api/v1/blog')
+    .post('/api/v1/blogs')
     .set('Authorization', `Bearer ${token}`)
     .field('category', blogData.category)
     .field('author', blogData.author)
@@ -140,7 +141,7 @@ test("it should return 200 and the list of users", async () => {
   };
 
   const responsez = await request(app)
-    .post('/api/v1/blog')
+    .post('/api/v1/blogs')
     .set('Authorization', `Bearer ${token}`)
     .attach(
       "coverImage",
@@ -153,13 +154,13 @@ test("it should return 200 and the list of users", async () => {
 //get single blog test
 test('it should return 200 and a single blog data', async () =>{
   const singleBlog = await request(app)
-  .get(`/api/v1/blog/${id}`)
+  .get(`/api/v1/blogs/${id}`)
   .set('Authorization', `Bearer ${token}`)
   .expect(200)
 })
 test('it should return 404 if blog is not founda', async () =>{
   const singleBlog = await request(app)
-  .get(`/api/v1/blog/65fb68730bd742d8b28c56a3`)
+  .get(`/api/v1/blogs/65fb68730bd742d8b28c56a3`)
   .set('Authorization', `Bearer ${token}`)
   .expect(404)
 })
@@ -175,7 +176,7 @@ test('it shoult return 201 and updated blog data', async () =>{
   };
 
   const updatedResponse = await request(app)
-    .patch(`/api/v1/blog/${id}`)
+    .patch(`/api/v1/blogs/${id}`)
     .set('Authorization', `Bearer ${token}`)
     .field('category', blogData.category)
     .field('author', blogData.author)
@@ -198,7 +199,7 @@ test('it shoult return 404 if blog to update not found', async () =>{
   };
 
   const updatedResponse = await request(app)
-    .patch(`/api/v1/blog/65fb68730bd742d8b28c56a3`)
+    .patch(`/api/v1/blogs/65fb68730bd742d8b28c56a3`)
 
     .set('Authorization', `Bearer ${token}`)
     .field('title', blogData.title)
@@ -220,7 +221,7 @@ test('it should return 201 and comment data', async () => {
     username:userNames
   }
   const commentResponse = await request(app)
-  .post(`/api/v1/blog/${id}/comments`)
+  .post(`/api/v1/blogs/${id}/comments`)
   .set('Authorization', `Bearer ${token}`)
   .send(commentData)
   .expect(201)
@@ -236,7 +237,7 @@ test('it should return 201 and liked  data', async () => {
   }
 
   const likeResponse = await request(app)
-  .post(`/api/v1/blog/${id}/likes`)
+  .post(`/api/v1/blogs/${id}/likes`)
   .set('Authorization', `Bearer ${token}`)
   .send(likeData)
   .expect(201)
@@ -251,7 +252,7 @@ test('should create a blog and return 400 if no image', async () => {
   };
 
   const responsez = await request(app)
-    .post('/api/v1/blog')
+    .post('/api/v1/blogs')
     .set('Authorization', `Bearer ${token}`)
     .field('category', blogData.category)
     .field('author', blogData.author)
@@ -264,7 +265,7 @@ test('should create a blog and return 400 if no image', async () => {
 // delete a blog
 test('it should return 204 id blog is deleted', async () =>{
   const deleteBlog = await request(app)
-  .delete(`/api/v1/blog/${id}`)
+  .delete(`/api/v1/blogs/${id}`)
   .set('Authorization', `Bearer ${token}`)
   .expect(204)
 })

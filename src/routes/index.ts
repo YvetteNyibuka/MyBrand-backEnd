@@ -8,11 +8,11 @@ import loginRouter from '../routes/auth/login.routes'
 
 const apiRouter: Router = express.Router();
 
-apiRouter.use('/blog', blogRoutes);
-apiRouter.use('/blog', commentRouter)
-apiRouter.use('/blog', likeRouter);
+apiRouter.use('/blogs', blogRoutes);
+apiRouter.use('/blogs', commentRouter)
+apiRouter.use('/blogs', likeRouter);
 apiRouter.use('/querries', querryRouter);
 apiRouter.use('/users', userRouter);
-apiRouter.use('/user/login', loginRouter);
+apiRouter.use('/users/login', loginRouter);
 export default apiRouter;
 

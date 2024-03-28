@@ -32,22 +32,22 @@ export default {
         '/api/v1/users/register': {
             ...addUser,
         },
-        '/api/v1/user/login': {
+        '/api/v1/users/login': {
             ...loginUser,
         },
-        '/api/v1/blog': {
+        '/api/v1/blogs': {
             ...getBlogs,
             ...addBlog
         },
-        '/api/v1/blog/{id}': {
+        '/api/v1/blogs/{id}': {
             ...getOneBlog,
             ...deleteBlog
         },
-        '/api/v1/blog/{id}/comments': {
+        '/api/v1/blogs/{id}/comments': {
             ...addComment,
             ...allComments
         },
-        '/api/v1/blog/{id}/likes': {
+        '/api/v1/blogs/{id}/likes': {
             ...addLike,
         },
         '/api/v1/querries': {

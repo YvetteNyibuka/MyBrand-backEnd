@@ -14,9 +14,9 @@ export const httpCreateUser = async (req: Request, res: Response) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res
-        .status(400)
+        .status(409)
         .json({
-          message: "Email already registered. Please choose another one.",
+          message: "Email already registered",
         });
     }
     const user = new User({
