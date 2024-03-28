@@ -57,7 +57,7 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
         likes: likes.length
       };
     }));
-
+``
     return res.status(200).json({ message: "Blogs with comments", data: blogsWithComments });
   } 
   catch (error: any) {

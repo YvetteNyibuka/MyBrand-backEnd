@@ -4,7 +4,7 @@ import validateUser from '../../validations/auth/userValidate';
 const isValid = (req: Request, res: Response, next: NextFunction) => {
   const { error } = validateUser(req.body);
 
-  if (error) return res.status(400).json({ message: error.details[0].message });
+  if (error) return res.status(400).json({ message: error.details[0].message.replace(/["\\]/g, '') });
 
   try {
     next();

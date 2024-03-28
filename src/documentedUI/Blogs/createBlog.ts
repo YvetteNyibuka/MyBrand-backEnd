@@ -14,11 +14,13 @@ export default {
                     schema: {
                         type: "object",
                         properties: {
+                            category: { type: "string" },
+                            author: { type: "string" },
                             title: { type: "string" },
                             description: { type: "string" },
                             coverImage: { type: "string", format: "binary" },
                         },
-                        required: ["title", "description", "coverImage"],
+                        required: ["category", "author", "title", "description", "coverImage"],
                     },
                 },
             },

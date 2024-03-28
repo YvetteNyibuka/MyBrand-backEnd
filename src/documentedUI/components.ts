@@ -41,6 +41,16 @@ export default {
         Blog:{
           type: "object",
           properties:{
+            category:{
+              type:'string',
+              description: "blog category",
+              example:'Experience',
+            },
+            author:{
+              type:'string',
+              description: "blog author",
+              example:'Yvette',
+            },
             title:{
               type:'string',
               description: "blog title",
@@ -87,6 +97,27 @@ export default {
             isLiked:{
               type:'boolean',
               description:"Provide a name of commenting person"
+            },
+          },
+        },
+        Querries:{
+          type: "object",
+          properties:{
+            fullNames:{
+              type:'string',
+              description: "Sender's full names",
+            },
+            email:{
+              type:'string',
+              description:"enter the email address"
+            },
+            subject:{
+              type:'boolean',
+              description:"Subject matter"
+            },
+            message:{
+              type:'boolean',
+              description:"Detailed message"
             },
           },
         },
