@@ -54,7 +54,7 @@ export const httpGetBlogs = async (req: Request, res: Response) => {
       return {
         ...blog.toObject(),
         comments: comments,
-        likes: likes.length
+        likes: likes
       };
     }));
 ``
