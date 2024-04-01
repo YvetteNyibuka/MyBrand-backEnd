@@ -5,7 +5,7 @@ export default  {
         description: "Local server",
       },
       {
-        url:"https://cyan-powerful-chick.cyclic.app/",
+        url:"https://mybrand-be-rs6b.onrender.com/",
         description: "Online server",
       }
     ],
