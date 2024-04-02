@@ -90,6 +90,12 @@ export const httpUpdateOneBlog = async (req: Request, res: Response) => {
     if (!blog) {
       return res.status(404).json({ message: "Blog not found", data: null });
     }
+    // Update blog fields with data from the request body
+    blog.category = req.body.category;
+    blog.author = req.body.author;
+    blog.title = req.body.title;
+    blog.description = req.body.description;
+    // blog.content = req.body.content; 
     await blog.save();
     res.status(201).json({ message: "Blog updated successfully", data: blog });
   }
