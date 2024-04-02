@@ -3,11 +3,6 @@ export default {
         tags:['Blogs'],
         description:'Get Single blog',
         operationId:'getSingleBlog',
-        security:[
-            {
-                BearerAuth:[]
-            }
-        ],
         parameters:[
             {
                 name:'id',

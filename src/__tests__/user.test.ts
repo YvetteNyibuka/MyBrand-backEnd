@@ -155,13 +155,11 @@ test("it should return 200 and the list of users", async () => {
 test('it should return 200 and a single blog data', async () =>{
   const singleBlog = await request(app)
   .get(`/api/v1/blogs/${id}`)
-  .set('Authorization', `Bearer ${token}`)
   .expect(200)
 })
 test('it should return 404 if blog is not founda', async () =>{
   const singleBlog = await request(app)
   .get(`/api/v1/blogs/65fb68730bd742d8b28c56a3`)
-  .set('Authorization', `Bearer ${token}`)
   .expect(404)
 })
 
