@@ -15,6 +15,8 @@ import createQuerry from "../Querries/createQuerry";
 import getQuerries from "../Querries/getQuerries";
 import getOneQuerry from "../Querries/getOneQuery";
 import deleteQuerry from "../Querries/deleteQuerry";
+import updateBlog from "../Blogs/updateBlog"
+
 
 export default {
 
@@ -41,7 +43,8 @@ export default {
         },
         '/api/v1/blogs/{id}': {
             ...getOneBlog,
-            ...deleteBlog
+            ...deleteBlog,
+            ...updateBlog
         },
         '/api/v1/blogs/{id}/comments': {
             ...addComment,
